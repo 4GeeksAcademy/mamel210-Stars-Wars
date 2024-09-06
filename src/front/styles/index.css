@@ -1,3 +1,10 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+body {
+    background-color: rgb(35, 35, 36);
+  }
+  
+  .layoutContainer {
+    height: 800px;
+    display: flex;
+    align-items: center;
+  }
+  

@@ -1,26 +1,24 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext.js";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
-import "../../styles/home.css";
+import React, { useContext, useEffect, useState } from 'react';
+import { Context } from '../store/appContext.js';
+import '../../styles/home.css';
+import { NewContactButton } from '../component/NewContactButton.jsx';
+import { Card } from '../component/Card.jsx';
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
+		<div className='bg-light p-5 rounded container mt-5'>
+			<NewContactButton />
+			<h1>{store.contact}</h1>
+			<div className='profiles'>
+				{store.contacts.length == 0 ? <div>no tiene registros para mostrar </div> : null}
+				{store.contacts.map((contact, index) => {
+					return (
+						<Card key={index} contact={contact} />
+					)
+				})}
 			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
 		</div>
 	);
 };

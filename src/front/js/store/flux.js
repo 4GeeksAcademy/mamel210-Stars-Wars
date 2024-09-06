@@ -1,54 +1,85 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
-		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
+	  store: {
+		host: 'https://playground.4geeks.com/contact',
+		agend: 'Mamel210',
+		contacts: []
+	  },
+	  actions: {
+		getContacts: async () => {
+		  const uri = `${getStore().host}/agendas/${getStore().agend}/contacts`;
+		  const options = {
+			method: 'GET',
+		  };
+		  const response = await fetch(uri, options);
+		  if (!response.ok) {
+			if (response.status === 404)  {
+				// aca debo llamar la funcion que crea la agenda
 			}
-		}
+			return
+		  }
+		  const data = await response.json();
+		  setStore({ contacts: data.contacts });
+		},
+		addContact: async (formdata) => {
+		  const host = 'https://playground.4geeks.com/contact';
+		  const agend = 'Mamel210';
+		  const uri = `${host}/agendas/${agend}/contacts`;
+		  const options = {
+			method: 'POST',
+			headers: {
+			  'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(formdata),
+		  };
+		  const response = await fetch(uri, options);
+		  const newContact = await response.json();
+		  const oldData = getStore();
+		  setStore({ contacts: [...oldData.contacts, newContact] });
+		},
+		editContact: async (formdata) => {
+		  const data = getStore();
+		  const currentId = data.currentContact.id;
+		  const host = 'https://playground.4geeks.com/contact';
+		  const agend = 'Mamel210';
+		  const uri = `${host}/agendas/${agend}/contacts/${currentId}`;
+		  const options = {
+			method: 'PUT',
+			headers: {
+			  'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(formdata),
+		  };
+		  const response = await fetch(uri, options);
+		  /* falta if response: ok */
+		  const editedContact = await response.json();
+		  const contactToEdit = data.contacts.map((contact) => {
+			return contact.id === editedContact.id ? editedContact : contact;
+		  });
+  
+		  setStore({ contacts: contactToEdit });
+		},
+		currentContact: (contact) => {setStore({ currentContact: contact });},
+		deleteContact: async (contact) => {
+		  const data = getStore();
+		  const host = 'https://playground.4geeks.com/contact';
+		  const agend = 'Mamel210';
+		  const uri = `${host}/agendas/${agend}/contacts/${contact.id}`;
+		  const options = {
+			method: 'DELETE',
+		  };
+  
+		  const response = await fetch(uri, options);
+		  const remainContacts = data.contacts.filter(
+			(value) => value.id !== contact.id
+		  );
+  
+		  setStore({ contacts: remainContacts });
+		  return response;
+		},
+	  },
 	};
-};
-
-export default getState;
+  };
+  
+  export default getState;
+  

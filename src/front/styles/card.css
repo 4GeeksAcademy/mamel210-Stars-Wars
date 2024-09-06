@@ -1,0 +1,53 @@
+.cardProfileContainer {
+    padding: 2rem;
+    border-bottom: 1px solid gray;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .cardProfileImgContainer {
+    width: 150px;
+    height: 150px;
+    margin: 0 1rem;
+  }
+  
+  .cardProfileImage {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+  }
+  
+  .cardProfileDescription {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .cardProfileButtonGroup {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .cardProfileButtonGroup-edit {
+    color: white;
+  }
+  
+  .cardProfileButtonGroup-delete {
+    color: white;
+  }
+  
+  .cardDescriptionItems {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .cardContent {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
