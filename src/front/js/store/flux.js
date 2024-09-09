@@ -1,9 +1,17 @@
+import { Navigate } from "react-router-dom";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 	  store: {
 		host: 'https://playground.4geeks.com/contact',
 		agend: 'Mamel210',
-		contacts: []
+		contacts: [],
+		number: 1,
+	    isLogin: false,
+		contacts: [],
+		currentContact: {},
+		characters: [],
+		currentCharacter: {}
 	  },
 	  actions: {
 		getContacts: async () => {
@@ -22,9 +30,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  setStore({ contacts: data.contacts });
 		},
 		addContact: async (formdata) => {
-		  const host = 'https://playground.4geeks.com/contact';
-		  const agend = 'Mamel210';
-		  const uri = `${host}/agendas/${agend}/contacts`;
+		  const uri = `${getStore().host}/agendas/${getStore().agend}/contacts`
 		  const options = {
 			method: 'POST',
 			headers: {
@@ -33,16 +39,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			body: JSON.stringify(formdata),
 		  };
 		  const response = await fetch(uri, options);
-		  const newContact = await response.json();
-		  const oldData = getStore();
+		  
+		  if (!response.ok) {
+			  Navigate('/error')
+			}
+			const newContact = await response.json();
+			const oldData = getStore();
 		  setStore({ contacts: [...oldData.contacts, newContact] });
 		},
 		editContact: async (formdata) => {
 		  const data = getStore();
 		  const currentId = data.currentContact.id;
-		  const host = 'https://playground.4geeks.com/contact';
-		  const agend = 'Mamel210';
-		  const uri = `${host}/agendas/${agend}/contacts/${currentId}`;
+		  const uri = `${getStore().host}/agendas/${getStore().agend}/contacts/${currentId}`;
 		  const options = {
 			method: 'PUT',
 			headers: {
@@ -62,9 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		currentContact: (contact) => {setStore({ currentContact: contact });},
 		deleteContact: async (contact) => {
 		  const data = getStore();
-		  const host = 'https://playground.4geeks.com/contact';
-		  const agend = 'Mamel210';
-		  const uri = `${host}/agendas/${agend}/contacts/${contact.id}`;
+		  const uri = `${getStore().host}/agendas/${getStore().agend}/contacts/${contact.id}`;
 		  const options = {
 			method: 'DELETE',
 		  };

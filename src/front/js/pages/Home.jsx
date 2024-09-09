@@ -1,24 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Context } from '../store/appContext.js';
-import '../../styles/home.css';
-import { NewContactButton } from '../component/NewContactButton.jsx';
-import { Card } from '../component/Card.jsx';
+import React from "react";
 
-export const Home = () => {
-	const { store, actions } = useContext(Context);
-
-	return (
-		<div className='bg-light p-5 rounded container mt-5'>
-			<NewContactButton />
-			<h1>{store.contact}</h1>
-			<div className='profiles'>
-				{store.contacts.length == 0 ? <div>no tiene registros para mostrar </div> : null}
-				{store.contacts.map((contact, index) => {
-					return (
-						<Card key={index} contact={contact} />
-					)
-				})}
-			</div>
-		</div>
-	);
-};
+export const Home = () => <div className="cover-container d-flex w-75 p-4 mx-auto flex-column"><img className="d-block w-100" src="https://starwars.chocobar.net/star-wars-back0.jpg" alt="Home" /></div>
+    
