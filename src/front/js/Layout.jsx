@@ -14,10 +14,10 @@ import { Error404 } from "./pages/Error404.jsx";
 import { AddContact } from "./pages/AddContact.jsx";
 import { EditContact } from "./pages/EditContact.jsx";
 import { Characters } from "./pages/Characters.jsx";
-import { DetailCharacters } from "./pages/DetailCharacters.jsx";
 import { Planets } from "./pages/Planets.jsx";
 import { Starships } from "./pages/Starships.jsx";
 import { Home } from "./pages/Home.jsx";
+import { Details } from "./component/Details.jsx";
 
 
 // Create your first Component
@@ -28,7 +28,7 @@ const Layout = () => {
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
-        <div>
+        <div className="d-flex flex-column h-100">
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
@@ -42,7 +42,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<AddContact />} path='/add-contact' />
                         <Route element={<EditContact />} path='/edit-contact' />
-                        <Route element={<DetailCharacters />} path='/characters/:uid' />
+                        <Route element={<Details />} path='/characters/:uid' />
                         <Route element={<Error404 />} path="*" />
                     </Routes>
                     <Footer />

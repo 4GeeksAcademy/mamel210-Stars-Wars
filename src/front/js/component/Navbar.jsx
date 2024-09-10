@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Favorites } from "./Favorites.jsx";
+
 
 
 export const Navbar = () => {
@@ -23,6 +25,9 @@ export const Navbar = () => {
 						</div>
 						<div className="nav-item">
 							<Link to={"/contacts"} className="nav-link link-secondary">Contacts</Link>
+						</div>
+						<div className="nav-item">
+							<Favorites />
 						</div>
 
 					</div>

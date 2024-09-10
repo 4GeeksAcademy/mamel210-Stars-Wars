@@ -28,7 +28,7 @@ export const AddContact = () => {
       address,
     }
     actions.addContact(formdata)
-    navigate('/')
+    navigate("/contacts")
   }
 
   return (
