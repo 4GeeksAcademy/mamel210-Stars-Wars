@@ -120,8 +120,59 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({isLoading: false})
 			},
 			addToFavorits: async () => {
-				
-			}
+			},
+			getStarships: async () => {
+				const uri = `${getStore().hostStar}/starships`
+				const options = {
+					method: 'GET',
+				};
+				const response = await fetch(uri, options);
+				const data = await response.json();
+				setStore({ starships: data.results });
+				if (!response.ok) {
+					return
+				}
+			},
+			getStarshipsDetails: async (uid) => {
+				const uri = `${getStore().hostStar}/starships/${uid}`
+				setStore({isLoading: true})
+				const options = {
+					method: 'GET',
+				};
+				const response = await fetch(uri, options);
+				const data = await response.json();
+				setStore({ starshipsDetails: data.result });
+				if (!response.ok) {
+					return
+				}
+                setStore({isLoading: false})
+			},
+			getPlanets: async () => {
+				const uri = `${getStore().hostStar}/planets`
+				const options = {
+					method: 'GET',
+				};
+				const response = await fetch(uri, options);
+				const data = await response.json();
+				setStore({ planets: data.results });
+				if (!response.ok) {
+					return
+				}
+			},
+			getPlanetsDetails: async (uid) => {
+				const uri = `${getStore().hostStar}/planets/${uid}`
+				setStore({isLoading: true})
+				const options = {
+					method: 'GET',
+				};
+				const response = await fetch(uri, options);
+				const data = await response.json();
+				setStore({ planetsDetails: data.result });
+				if (!response.ok) {
+					return
+				}
+                setStore({isLoading: false})
+			},
 		},
 	};
 };
