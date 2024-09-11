@@ -12,7 +12,7 @@ export const CardCollections = ({ data, title, model }) => {
                 {data.map((item) =>
                     <div className="col"key={item.uid}>
                         <div key={item.uid} className="card border-dark my-3 mx-2 text-bg-dark">
-                            <img src={`https://starwars-visualguide.com/assets/img/${model}/${item.uid}.jpg`} className="card-img-top" alt="..."
+                            <img src={`https://starwars-visualguide.com/assets/img/${model}/${item.uid}.jpg`} className="card-img-top cardImg" alt="..."
                                 onError={handleError} />
                             {/* {<img src={`https://starwars-visualguide.com/assets/img/planets/${item.uid}.jpg`} className="card-img-top" alt="..." 
                     onError={handleError}/> } */}

@@ -167,7 +167,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				const response = await fetch(uri, options);
 				const data = await response.json();
-				setStore({ planetsDetails: data.result });
+				setStore({ planetDetails: data.result });
 				if (!response.ok) {
 					return
 				}
