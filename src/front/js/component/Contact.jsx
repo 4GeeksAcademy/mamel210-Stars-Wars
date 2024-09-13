@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext.js';
 import { DeleteContact } from './DeleteContact.jsx';
-export const Card = ({ contact }) => {
+export const Contact = ({ contact }) => {
     const { actions } = useContext(Context)
     const [show, setShow] = useState(false);
 

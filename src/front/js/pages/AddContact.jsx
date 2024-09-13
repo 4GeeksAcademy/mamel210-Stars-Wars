@@ -10,15 +10,11 @@ export const AddContact = () => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
-
   const navigate = useNavigate()
-
   const handleName = (element) => setName(element.target.value)
   const handlePhone = (element) => setPhone(element.target.value)
   const handleEmail = (element) => setEmail(element.target.value)
   const handleAddress = (element) => setAddress(element.target.value)
-
-
   const handleSubmit = (element) => {
     element.preventDefault()
     const formdata = {
@@ -28,7 +24,7 @@ export const AddContact = () => {
       address,
     }
     actions.addContact(formdata)
-    navigate('/')
+    navigate("/contacts")
   }
 
   return (

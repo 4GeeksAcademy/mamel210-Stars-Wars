@@ -1,17 +1,25 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import injectContext from "./store/appContext.js";
-// Custom Components
+// Custom Component
 import ScrollToTop from "./component/ScrollToTop.jsx";
 import { BackendURL } from "./component/BackendURL.jsx";
-import { Footer } from "./component/Footer.jsx";
 import { Navbar } from "./component/Navbar.jsx";
-// Custom Pagues of Views
-import { Single } from "./pages/Single.jsx";
-import { Home } from "./pages/Home.jsx";
+import { Footer } from "./component/Footer.jsx";
+// Custom Pages
+import { Contacts } from "./pages/Contacts.jsx";
 import { Demo } from "./pages/Demo.jsx";
-import { AddContact } from './pages/AddContact.jsx';
-import { EditContact } from './pages/EditContact.jsx';
+import { Single } from "./pages/Single.jsx";
+import { Error404 } from "./pages/Error404.jsx";
+import { AddContact } from "./pages/AddContact.jsx";
+import { EditContact } from "./pages/EditContact.jsx";
+import { Characters } from "./pages/Characters.jsx";
+import { Planets } from "./pages/Planets.jsx";
+import { Starships } from "./pages/Starships.jsx";
+import { Home } from "./pages/Home.jsx";
+import { Details } from "./component/Details.jsx";
+import { StarshipDetails } from "./component/StarshipDetails.jsx";
+import { PlanetDetails } from "./component/PlanetDetails.jsx";
 
 
 // Create your first Component
@@ -22,17 +30,24 @@ const Layout = () => {
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
-        <div>
+        <div className="d-flex flex-column h-100">
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<AddContact />} path='/add-contact' />
-                        <Route element={<EditContact />} path='/edit-contact' />
+                        <Route element={<Characters />} path='/characters' />
+                        <Route element={<Planets />} path='/planets' />
+                        <Route element={<Starships />} path='/starships' />
+                        <Route element={<Contacts />} path='/contacts' />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<h1>Not found!</h1>} path="*" />
+                        <Route element={<AddContact />} path='/add-contact' />
+                        <Route element={<EditContact />} path='/edit-contact' />
+                        <Route element={<Details />} path='/characters/:uid' />
+                        <Route element={<StarshipDetails />} path='/starships/:uid' />
+                        <Route element={<PlanetDetails />} path='/planets/:uid' />
+                        <Route element={<Error404 />} path="*" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
