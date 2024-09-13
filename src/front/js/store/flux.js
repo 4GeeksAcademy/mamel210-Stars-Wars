@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -15,7 +16,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			currentCharacter: {},
 			hasError: false,
 			errorMessage: "",
-			isLoading: false
+			isLoading: false,
+			favorites: []
 		},
 		actions: {
 			getContacts: async () => {
@@ -107,7 +109,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			getDetails: async (uid) => {
 				const uri = `${getStore().hostStar}/people/${uid}`
-				setStore({isLoading: true})
+				setStore({ isLoading: true })
 				const options = {
 					method: 'GET',
 				};
@@ -117,9 +119,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (!response.ok) {
 					return
 				}
-                setStore({isLoading: false})
+				setStore({ isLoading: false })
 			},
-			addToFavorits: async () => {
+			addToFavorits: async (item, model) => {
+				const data = { item, model }
+				const favorites = getStore();
+				const alreadyExist = favorites.favorites && favorites?.favorites?.some((fav) => fav.item.uid === data.item.uid)
+
+				if (alreadyExist) {
+					return
+				}
+
+				setStore({ favorites: [...favorites.favorites || [], data] })
 			},
 			getStarships: async () => {
 				const uri = `${getStore().hostStar}/starships`
@@ -135,7 +146,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			getStarshipsDetails: async (uid) => {
 				const uri = `${getStore().hostStar}/starships/${uid}`
-				setStore({isLoading: true})
+				setStore({ isLoading: true })
 				const options = {
 					method: 'GET',
 				};
@@ -145,7 +156,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (!response.ok) {
 					return
 				}
-                setStore({isLoading: false})
+				setStore({ isLoading: false })
 			},
 			getPlanets: async () => {
 				const uri = `${getStore().hostStar}/planets`
@@ -161,7 +172,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			getPlanetsDetails: async (uid) => {
 				const uri = `${getStore().hostStar}/planets/${uid}`
-				setStore({isLoading: true})
+				setStore({ isLoading: true })
 				const options = {
 					method: 'GET',
 				};
@@ -171,7 +182,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (!response.ok) {
 					return
 				}
-                setStore({isLoading: false})
+				setStore({ isLoading: false })
+			},
+			removeToFavorits: async (item) => {
+				const favorites = getStore();
+				const valeroToRemove = favorites.favorites.filter(fav => fav.item.uid !== item.item.uid)
+				console.log(valeroToRemove);
+
+
+				console.log(favorites, item, 'mamel');
+
+				setStore({ favorites: valeroToRemove })
 			},
 		},
 	};

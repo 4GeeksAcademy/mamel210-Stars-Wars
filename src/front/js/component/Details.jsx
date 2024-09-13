@@ -1,14 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import ContentLoader from 'react-content-loader'
-
 
 export const Details = () => {
     const { store, actions } = useContext(Context);
     const params = useParams();
-    console.log(store);
-
+    
     useEffect(() => {
         actions.getDetails(params.uid)
     }, [])

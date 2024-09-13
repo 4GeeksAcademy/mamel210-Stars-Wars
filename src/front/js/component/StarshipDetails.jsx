@@ -1,8 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import ContentLoader from 'react-content-loader'
-
 
 export const StarshipDetails = () => {
     const { store, actions } = useContext(Context);

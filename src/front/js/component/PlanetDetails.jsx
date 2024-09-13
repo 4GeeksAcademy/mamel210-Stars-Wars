@@ -2,12 +2,10 @@ import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-
 export const PlanetDetails = () => {
     const { store, actions } = useContext(Context);
     const params = useParams();
-    console
-
+    
     useEffect(() => {
         actions.getPlanetsDetails(params.uid)
     }, [])
