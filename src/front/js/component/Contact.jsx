@@ -7,12 +7,12 @@ import { DeleteContact } from './DeleteContact.jsx';
 export const Contact = ({ contact }) => {
     const { actions } = useContext(Context)
     const [show, setShow] = useState(false);
+    const navigate = useNavigate()
 
     const handleClose = () => setShow(false);
 
-    const navigate = useNavigate()
     const handleEdit = () => {
-        navigate("edit-contact")
+        navigate("/edit-contact")
         actions.currentContact(contact)
     }
     const handleDelete = () => {
