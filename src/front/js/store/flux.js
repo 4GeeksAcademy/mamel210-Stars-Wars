@@ -26,9 +26,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: 'GET',
 				};
 				const response = await fetch(uri, options);
+
+
 				if (!response.ok) {
-					if (response.status === '404') {
+					if (response.status === 404) {
 						// aca debo llamar la funcion que crea la agenda
+						const res = await fetch(`${getStore().host}/agendas/${getStore().agend}`, { method: 'POST' });
+						return res
 					}
 					return
 				}
