@@ -14,7 +14,6 @@ export const CardCollections = ({ data, title, model }) => {
     }
     const handleError = (event) => {
         event.target.src = 'https://starwars-visualguide.com/assets/img/placeholder.jpg';
-
     }
     return (
         <div className="container my-3">

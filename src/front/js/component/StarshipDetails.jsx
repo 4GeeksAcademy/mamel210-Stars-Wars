@@ -5,6 +5,9 @@ import { Context } from "../store/appContext";
 export const StarshipDetails = () => {
     const { store, actions } = useContext(Context);
     const params = useParams();
+    const handleError = (event) => {
+        event.target.src = 'https://starwars-visualguide.com/assets/img/placeholder.jpg';
+    }
 
     useEffect(() => {
         actions.getStarshipsDetails(params.uid)
@@ -21,7 +24,7 @@ export const StarshipDetails = () => {
             <div className="card my-2  bg-dark text-light">
                 <div className="row g-0">
                     <div className="col-md-7 col-lg-6 col-xl-5">
-                        <img className="img-fluid rounded-start" src={`https://starwars-visualguide.com/assets/img/starships/${params.uid}.jpg`} />
+                        <img onError={handleError} className="img-fluid rounded-start" src={`https://starwars-visualguide.com/assets/img/starships/${params.uid}.jpg`} />
                     </div>
                     <div className="col-md-5 col-lg-6 col-xl-7">
                         <div className="card-body">
