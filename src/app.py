@@ -25,9 +25,9 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
-setup_admin(app) # Add the admin
-setup_commands(app) # Add the admin
-app.register_blueprint(api, url_prefix='/api') # Add all endpoints form the API with a "api" prefix
+setup_admin(app)  # Add the admin
+setup_commands(app)  # Add the admin
+app.register_blueprint(api, url_prefix='/api')  # Add all endpoints form the API with a "api" prefix
 
 
 # Handle/serialize errors like a JSON object
