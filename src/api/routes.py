@@ -72,4 +72,13 @@ def author(id):
         response_body['message'] = f'Mensaje desde el DELETE de {id}'
         response_body['results'] = {}
         return response_body, 200
-        
+
+@api.route('/users', methods=['GET'])
+def users():
+    response_body = {}
+    if request.method == 'GET':
+        rows = db.session.execute(db.select(Users)).scalars()
+        result = [row.serialize() for row in rows]
+        response_body['message'] = 'Mensaje desde el GET'
+        response_body['results'] = result
+        return response_body, 200        
