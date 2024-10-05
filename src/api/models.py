@@ -24,7 +24,9 @@ class Users(db.Model):
                 'email': self.email,
                 'is_active': self.is_active,
                 'is_admin': self.is_admin,
-                'post_to': [row.serialize() for row in self.post_to]}
+                'post_to': [row.serialize() for row in self.post_to],
+                'favorite_character_to': [row.serialize() for row in self.favorite_characters_to],
+                'favorite_planets_to': [row.serialize() for row in self.favorite_planets_to]}
 
 
 class Followers(db.Model):
@@ -33,39 +35,6 @@ class Followers(db.Model):
     follower_to = db.relationship('Users', foreign_keys=[follower_id], backref=db.backref('follower_to', lazy='select'))
     following_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     following_to = db.relationship('Users', foreign_keys=[following_id], backref=db.backref('following_to', lazy='select'))
-    
-
-class Authors(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    # Atributos
-    name = db.Column(db.String(), unique=False, nullable=False)
-    country = db.Column(db.String(), unique=False, nullable=True)
-    # Relaciones
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    user_to = db.relationship('Users', foreign_keys=[user_id], backref=db.backref('author_to', lazy='select'))
-
-    def __repr__(self):
-        return f'<Authors: {self.id} - {self.name}>'
-
-    def serialize(self):
-        return {'id': self.id,
-                'authors': self.name,
-                'country': self.country,
-                'books': [row.serialize() for row in self.book_to]}
-
-
-class Books(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(), unique=False, nullable=False)
-    author_id = db.Column(db.Integer, db.ForeignKey('authors.id'))
-    author_to = db.relationship('Authors', foreign_keys=[author_id], backref=db.backref('book_to'), lazy='select')
-
-    def __repr__(self):
-        return f'<Books> {self.id} / {self.name}'
-
-    def serialize(self):
-        return {'id': self.id,
-                'book': self.name}
 
 
 class Characters(db.Model):
@@ -123,11 +92,14 @@ class FavouriteCharacters(db.Model):
                 "character_id": self.character_id}
 
 
+
 class FavouritePlanets(db.Model):
     __tablename__ = "favorite_planets"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_to = db.relationship('Users', foreign_keys=[user_id], backref=db.backref('favorite_planets_to'), lazy='select')
     planet_id = db.Column(db.Integer, db.ForeignKey('planets.id'), nullable=False)
+    planet_to = db.relationship('Planets', foreign_keys=[planet_id], backref=db.backref('favorite_to'), lazy='select')
 
     def __repr__(self):
         return f'<FavouritesPlanets {self.id}>'
@@ -135,7 +107,31 @@ class FavouritePlanets(db.Model):
     def serialize(self):
         return {"id": self.id,
                 "user_id": self.user_id,
-                "planet_id": self.planet_id}                                           
+                "planet_id": self.planet_id}
+
+
+class Comments(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
+    user = db.relationship('Users', backref=db.backref('comments', lazy=True))
+    post = db.relationship('Posts', backref=db.backref('comments', lazy=True))
+
+    def __repr__(self):
+        return f'<Comment {self.body[:20]}>'                 
+
+
+class Medias(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.Enum('image', 'video', name='media_type'), nullable=False)
+    url = db.Column(db.String(255), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
+    post = db.relationship('Posts', backref=db.backref('media', lazy=True))
+
+    def __repr__(self):
+        return f'<Media {self.type} - {self.url}>'
+
 
 class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -159,4 +155,5 @@ class Posts(db.Model):
                 'body': self.body,
                 'date': self.date,
                 'user_id': self.user_id,
-                'image_url': self.image_url}
+                'image_url': self.image_url,
+                'medias_to': [row.serialize() for row in self.medias_to]}
