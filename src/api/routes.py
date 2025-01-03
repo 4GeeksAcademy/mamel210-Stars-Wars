@@ -26,10 +26,12 @@ def login():
     response_body = {}
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    user
-    if email != "test" or password != "test":
-        response_body['message'] = "bad email or passwaord"
-        return response_body, 401
+    user = db.session.execute(db.select(Users).where(Users.email == email, Users.password == password, Users.is_active)).scalars()
+    if not user:
+        response_body["message"] = "there is no account with this email and password, please register"
+        return response_body, 404
+
+    # aqui resolver las validaciones de logeo, por ahora anda derecho
     access_token = create_access_token(identity=email)
     response_body['message'] = "Usuario logeado con exito"
     response_body['access_token'] = access_token
