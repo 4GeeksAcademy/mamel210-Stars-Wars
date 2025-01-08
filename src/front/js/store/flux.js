@@ -20,6 +20,61 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: []
 		},
 		actions: {
+			login: async (formData, navigate) => {
+				console.log("formData", formData)
+				const authToken = localStorage.getItem("token")
+				console.log("authToken", authToken)
+				const headers = {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${authToken}`
+				}
+				const url = `${process.env.BACKEND_URL}/api/login`
+				console.log(url)
+				const options = {
+					method: "POST",
+					headers,
+					body: JSON.stringify(formData)
+				}
+
+				try {
+					const response = await fetch(url, options)
+					console.log("response", response)
+					const data = await response.json()
+					console.log("data", data)
+
+				} catch (error) {
+					throw error
+				}
+
+				navigate("/home")
+			},
+			register: async (formData, navigate) => {
+				const authToken = localStorage.getItem("token")
+				console.log("authToken", authToken)
+				const headers = {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${authToken}`
+				}
+				const url = `${process.env.BACKEND_URL}/api/register`
+				console.log(url)
+				const options = {
+					method: "POST",
+					headers,
+					body: JSON.stringify(formData)
+				}
+
+				try {
+					const response = await fetch(url, options)
+					console.log("response", response)
+					const data = await response.json()
+					console.log("data", data)
+
+				} catch (error) {
+					throw error
+				}
+
+				navigate("/home")
+			},
 			getContacts: async () => {
 				const uri = `${getStore().host}/agendas/${getStore().agend}/contacts`;
 				const options = {

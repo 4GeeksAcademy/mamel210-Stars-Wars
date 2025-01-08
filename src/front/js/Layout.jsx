@@ -20,6 +20,8 @@ import { Home } from "./pages/Home.jsx";
 import { Details } from "./component/Details.jsx";
 import { StarshipDetails } from "./component/StarshipDetails.jsx";
 import { PlanetDetails } from "./component/PlanetDetails.jsx";
+import { Login } from "./pages/login/Login.jsx";
+import { Register } from "./pages/register/Register.jsx";
 
 
 // Create your first Component
@@ -35,7 +37,9 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                        <Route element={<Login />} path="/" />
+                        <Route element={<Register />} path="/register" />
+                        <Route element={<Home />} path="/home" />
                         <Route element={<Characters />} path='/characters' />
                         <Route element={<Planets />} path='/planets' />
                         <Route element={<Starships />} path='/starships' />

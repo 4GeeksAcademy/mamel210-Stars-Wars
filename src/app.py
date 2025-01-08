@@ -30,8 +30,12 @@ setup_admin(app)  # Add the admin
 setup_commands(app)  # Add the admin
 app.register_blueprint(api, url_prefix='/api')  # Add all endpoints form the API with a "api" prefix
 # Setup the Flask-JWT-Extended extension
-app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")  # Change this!
 jwt = JWTManager(app)
+
+@jwt.expired_token_loader
+def expired_token_callback(jwt_header, jwt_payload):
+    return jsonify({"message": "The token has been expired", "error": "token_expired"}), 401
 
 
 # Handle/serialize errors like a JSON object
