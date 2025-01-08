@@ -21,6 +21,7 @@ import { Details } from "./component/Details.jsx";
 import { StarshipDetails } from "./component/StarshipDetails.jsx";
 import { PlanetDetails } from "./component/PlanetDetails.jsx";
 import { Login } from "./pages/login/Login.jsx";
+import { Register } from "./pages/register/Register.jsx";
 
 
 // Create your first Component
@@ -37,6 +38,7 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Login />} path="/" />
+                        <Route element={<Register />} path="/register" />
                         <Route element={<Home />} path="/home" />
                         <Route element={<Characters />} path='/characters' />
                         <Route element={<Planets />} path='/planets' />

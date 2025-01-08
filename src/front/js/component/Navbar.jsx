@@ -25,6 +25,9 @@ export const Navbar = () => {
 							<Link to={"/contacts"} className="nav-link link-secondary">Contacts</Link>
 						</div>
 						<div className="nav-item">
+							<Link to={"/register"} className="nav-link link-secondary">Register</Link>
+						</div>
+						<div className="nav-item">
 							<Favorites />
 						</div>
 					</div>
